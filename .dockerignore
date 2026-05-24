@@ -1,0 +1,14 @@
+.git
+.gitignore
+.cursor
+.idea
+.vscode
+.DS_Store
+bin
+dist
+docs
+*.exe
+*.test
+*.out
+burrow-debug.log
+README.md
