@@ -8,9 +8,9 @@ import (
 	"strconv"
 	"strings"
 	"time"
-
-	"golang.org/x/sys/unix"
 )
+
+const userHZ = 100 // Linux USER_HZ; 100 on x86_64 and typical CI runners
 
 func processStartTimeSupported() bool { return true }
 
@@ -41,12 +41,7 @@ func processStartTime(pid int) (time.Time, error) {
 		return time.Time{}, err
 	}
 
-	clockTicks := unix.Sysconf(unix.SC_CLK_TCK)
-	if clockTicks <= 0 {
-		clockTicks = 100
-	}
-
-	seconds := float64(startTicks) / float64(clockTicks)
+	seconds := float64(startTicks) / userHZ
 	return bootTime.Add(time.Duration(seconds * float64(time.Second))), nil
 }
 
