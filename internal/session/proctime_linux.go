@@ -27,11 +27,11 @@ func processStartTime(pid int) (time.Time, error) {
 	}
 
 	fields := strings.Fields(content[idx+2:])
-	if len(fields) < 21 {
+	if len(fields) < 20 {
 		return time.Time{}, fmt.Errorf("parse /proc/%d/stat: short field list", pid)
 	}
 
-	startTicks, err := strconv.ParseUint(fields[20], 10, 64)
+	startTicks, err := strconv.ParseUint(fields[19], 10, 64)
 	if err != nil {
 		return time.Time{}, fmt.Errorf("parse /proc/%d/stat starttime: %w", pid, err)
 	}
